@@ -7,7 +7,7 @@ import (
 
 type Contact struct {
 	ContactId     int    `json:"contact_id"`
-	UserId        int    `json:"user_id"`
+	UserId        int    `json:"-"`
 	ContactName   string `json:"contact_name"`
 	ContactNumber string `json:"contact_number"`
 }
@@ -26,10 +26,19 @@ func (c *Contact) Delete() {
 
 }
 
-func GetByContactId(contactId int) Contact {
-	return Contact{}
-}
-
-func GetByUserId(userId int) []User {
-	return []User{}
+func GetContactsByUserId(userId int) []Contact {
+	query := "SELECT * FROM contacts WHERE user_id=%d"
+	query = fmt.Sprintf(query, userId)
+	rows, err := db.GetRows(query)
+	if err != nil {
+		return []Contact{}
+	}
+	defer rows.Close()
+	contacts := []Contact{}
+	for rows.Next() {
+		contact := Contact{}
+		rows.Scan(&contact.ContactId, &contact.UserId, &contact.ContactName, &contact.ContactNumber)
+		contacts = append(contacts, contact)
+	}
+	return contacts
 }

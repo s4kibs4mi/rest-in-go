@@ -29,7 +29,18 @@ func CreateContact(w http.ResponseWriter, r *http.Request) {
 }
 
 func ListContact(w http.ResponseWriter, r *http.Request) {
-
+	userId, err := strconv.Atoi(r.Header.Get("user_id"))
+	if err == nil {
+		contacts := data.GetContactsByUserId(userId)
+		json.NewEncoder(w).Encode(Response{
+			Code: http.StatusOK,
+			Data: contacts,
+		})
+		return
+	}
+	json.NewEncoder(w).Encode(Response{
+		Code: http.StatusBadRequest,
+	})
 }
 
 func DeleteContact(w http.ResponseWriter, r *http.Request) {

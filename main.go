@@ -20,6 +20,7 @@ func initRoutes() {
 	v1.HandleFunc("/user/auth/login", api.LoginUser).Methods("POST")
 
 	v1.HandleFunc("/contact/create", api.Authorization(api.CreateContact)).Methods("POST")
+	v1.HandleFunc("/contact/list", api.Authorization(api.ListContact)).Methods("GET")
 
 	fmt.Println("Application Running On :8009...")
 	http.ListenAndServe(":8009", routes)
