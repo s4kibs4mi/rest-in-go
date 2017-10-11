@@ -47,6 +47,8 @@ func LoginUser(w http.ResponseWriter, r *http.Request) {
 						RefreshToken: refreshToken,
 					}
 					if session.Save() {
+						user = data.GetUser(user.UserName)
+						session.UserId = user.UserId
 						json.NewEncoder(w).Encode(Response{
 							Code: http.StatusOK,
 							Data: session,

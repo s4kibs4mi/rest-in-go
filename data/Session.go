@@ -9,6 +9,7 @@ type Session struct {
 	SessionId    int    `json:"session_id,omitempty"`
 	AccessToken  string `json:"access_token"`
 	RefreshToken string `json:"refresh_token"`
+	UserId       int    `json:"user_id,omitempty"`
 }
 
 func (s *Session) Save() bool {
