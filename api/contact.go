@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"strconv"
 	"encoding/json"
-	"rest-in-go/data"
+	"github.com/s4kibs4mi/rest-in-go/data"
 )
 
 func CreateContact(w http.ResponseWriter, r *http.Request) {
@@ -28,6 +28,13 @@ func CreateContact(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
+func UpdateContact(w http.ResponseWriter, r *http.Request) {
+	json.NewEncoder(w).Encode(Response{
+		Code:    http.StatusNotImplemented,
+		Message: "Not Implemented",
+	})
+}
+
 func ListContact(w http.ResponseWriter, r *http.Request) {
 	userId, err := strconv.Atoi(r.Header.Get("user_id"))
 	if err == nil {
@@ -44,5 +51,8 @@ func ListContact(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteContact(w http.ResponseWriter, r *http.Request) {
-
+	json.NewEncoder(w).Encode(Response{
+		Code:    http.StatusNotImplemented,
+		Message: "Not Implemented",
+	})
 }

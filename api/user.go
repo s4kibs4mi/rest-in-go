@@ -3,8 +3,8 @@ package api
 import (
 	"net/http"
 	"encoding/json"
-	"rest-in-go/data"
-	"rest-in-go/utils"
+	"github.com/s4kibs4mi/rest-in-go/data"
+	"github.com/s4kibs4mi/rest-in-go/utils"
 )
 
 func CreateUser(w http.ResponseWriter, r *http.Request) {
@@ -30,6 +30,13 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(Response{
 		Code:    http.StatusBadRequest,
 		Message: "Malformed data received.",
+	})
+}
+
+func UpdateUser(w http.ResponseWriter, r *http.Request) {
+	json.NewEncoder(w).Encode(Response{
+		Code:    http.StatusNotImplemented,
+		Message: "Not Implemented",
 	})
 }
 
@@ -68,5 +75,19 @@ func LoginUser(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(Response{
 		Code:    http.StatusBadRequest,
 		Message: "Malformed data received.",
+	})
+}
+
+func DeleteAccessToken(w http.ResponseWriter, r *http.Request) {
+	json.NewEncoder(w).Encode(Response{
+		Code:    http.StatusNotImplemented,
+		Message: "Not Implemented",
+	})
+}
+
+func RefreshToken(w http.ResponseWriter, r *http.Request) {
+	json.NewEncoder(w).Encode(Response{
+		Code:    http.StatusNotImplemented,
+		Message: "Not Implemented",
 	})
 }

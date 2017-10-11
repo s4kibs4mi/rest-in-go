@@ -2,9 +2,9 @@ package api
 
 import (
 	"net/http"
-	"rest-in-go/data"
 	"strconv"
 	"encoding/json"
+	"github.com/s4kibs4mi/rest-in-go/data"
 )
 
 func Authorization(h http.HandlerFunc) http.HandlerFunc {

@@ -1,8 +1,8 @@
 package data
 
 import (
-	"rest-in-go/db"
 	"fmt"
+	"github.com/s4kibs4mi/rest-in-go/db"
 )
 
 type Session struct {
