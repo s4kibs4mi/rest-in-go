@@ -1,15 +1,26 @@
 package db
 
-import "database/sql"
+import (
+	"database/sql"
+	_ "github.com/mattn/go-sqlite3"
+)
 
-func NewConnection() sql.DB {
-	return sql.DB{}
+func NewConnection() *sql.DB {
+	db, err := sql.Open("sqlite3", "rest-api.db")
+	if err != nil {
+		panic(err)
+	}
+	return db
 }
 
-func GetRows(db sql.DB) sql.Rows {
-	return sql.Rows{}
+func GetRows(query string) (*sql.Rows, error) {
+	return NewConnection().Query(query)
 }
 
-func Exec(db sql.DB) bool {
-	return false
+func Exec(query string) bool {
+	_, err := NewConnection().Exec(query)
+	if err != nil {
+		return false
+	}
+	return true
 }
