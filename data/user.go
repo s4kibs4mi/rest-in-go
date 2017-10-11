@@ -43,17 +43,12 @@ func GetUser(userName string) User {
 	query := "SELECT * FROM users WHERE user_name='%s';"
 	query = fmt.Sprintf(query, userName)
 	rows, err := db.GetRows(query)
-	if err != nil {
-		return User{}
-	}
-	if !rows.Next() {
-		return User{}
-	}
 	user := User{}
-	res := rows.Scan(&user.UserId, &user.UserName, &user.UserPassword)
-	defer rows.Close()
-	if res != nil {
-		return User{}
+	if err == nil {
+		if rows.Next() {
+			rows.Scan(&user.UserId, &user.UserName, &user.UserPassword)
+			rows.Close()
+		}
 	}
 	return user
 }

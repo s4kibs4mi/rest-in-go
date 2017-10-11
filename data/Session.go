@@ -13,19 +13,25 @@ type Session struct {
 }
 
 func (s *Session) Save() bool {
-	query := "CREATE TABLE IF NOT EXISTS sessions(sessionId INTEGER PRIMARY KEY AUTOINCREMENT, accessToken TEXT, refreshToken TEXT);"
+	query := "CREATE TABLE IF NOT EXISTS sessions(session_id INTEGER PRIMARY KEY AUTOINCREMENT, access_token TEXT, refresh_token TEXT, user_id INTEGER);"
 	if db.Exec(query) {
-		query = "INSERT INTO sessions(accessToken, refreshToken) VALUES('%s', '%s');"
-		query = fmt.Sprintf(query, s.AccessToken, s.RefreshToken)
+		query = "INSERT INTO sessions(access_token, refresh_token, user_id) VALUES('%s', '%s', %d);"
+		query = fmt.Sprintf(query, s.AccessToken, s.RefreshToken, s.UserId)
 		return db.Exec(query)
 	}
 	return false
 }
 
-func (s *Session) Delete() {
-
-}
-
-func GetSession() Session {
-	return Session{}
+func GetSession(accessToken string, userId int) Session {
+	query := "SELECT * FROM sessions WHERE access_token='%s' AND user_id=%d"
+	query = fmt.Sprintf(query, accessToken, userId)
+	rows, err := db.GetRows(query)
+	session := Session{}
+	if err == nil {
+		if rows.Next() {
+			rows.Scan(&session.SessionId, &session.AccessToken, &session.RefreshToken, &session.UserId)
+			rows.Close()
+		}
+	}
+	return session
 }
